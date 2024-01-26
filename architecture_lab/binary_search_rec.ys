@@ -1,0 +1,108 @@
+# BEYZA ÇAPRAZ
+.pos 0x0
+init:
+    irmovq stack, %rsp
+    irmovq $6, %rdx
+    irmovq array_begin, %rdi
+    irmovq array_end, %rsi
+    call binary_search
+    halt
+
+#implement your code below (DO NOT CHANGE/REMOVE THIS COMMENT)
+
+binary_search:
+    rrmovq %rdx, %r14 #value copy
+    rrmovq %rdi, %r12 #begin copy
+    irmovq $1, %r9
+    irmovq $2, %r10
+    irmovq $8, %r11
+    rrmovq %rsi, %rcx #mid calculation
+    subq %rdi, %rcx #end - begin
+    dvvq %r11, %rcx
+    dvvq %r10, %rcx #(end - begin)/2
+    mllq %r11, %rcx
+    addq %rdi, %rcx # begin + (end - begin)/2
+    subq %rsi, %r12 # begin >= end
+    jge ret1
+    mrmovq (%rcx), %r10 #*mid
+    subq %rdx, %r10 #mid == value
+    je ret2
+    mrmovq (%rcx), %r10 #*mid
+    subq %r10, %r14 # *mid < value
+    jg if
+    jle else
+ret1:
+    irmovq $-1, %rax
+    ret
+ret2:
+    rrmovq %rcx, %r13 # mid copy
+    subq %rdi, %r13 # mid - begin
+    dvvq %r11, %r13
+    addq %r9, %r13 # (mid - begin) + 1
+    rrmovq %r13, %rax
+    ret
+if:
+    pushq %rdi
+    pushq %rsi
+    pushq %rdx
+    pushq %rcx
+    rrmovq %rcx, %r13 # mid copy
+    addq %r11, %r13 # mid + 8
+    rrmovq %r13, %rdi
+    call binary_search
+    popq %rcx
+    popq %rdx
+    popq %rsi
+    popq %rdi
+    rrmovq %rax, %r8 # temp
+    rrmovq %r8, %r13 # temp copy
+    irmovq $-1, %r12
+    subq %r12, %r13 # temp == -1
+    je ret4
+    jne ret3
+
+
+else:
+    pushq %rdi
+    pushq %rsi
+    pushq %rdx
+    pushq %rcx
+    rrmovq %rcx, %rsi
+    call binary_search
+    popq %rcx
+    popq %rdx
+    popq %rsi
+    popq %rdi
+    ret
+
+ret3:
+    rrmovq %rcx, %r14 #mid
+    subq %rdi, %r14 #mid - begin
+    dvvq %r11, %r14 
+    addq %r9, %r14 # mid - begin + 1
+    addq %r8, %r14 # temp + (mid - begin) + 1
+    rrmovq %r14, %rax
+    ret
+ret4:
+    rrmovq %r8, %rax
+    ret
+
+#implement your code above (DO NOT CHANGE/REMOVE THIS COMMENT)
+
+.pos 0x1008
+array_begin:
+    .quad 1
+    .quad 2
+    .quad 3
+    .quad 5
+    .quad 6
+    .quad 7
+    .quad 9
+    .quad 11
+array_end:
+    .quad 0
+.pos 0x1F00
+stack:
+    .quad 0
+
+
