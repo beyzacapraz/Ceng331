@@ -6,8 +6,8 @@ This assignment involves generating a total of four attacks, code injection atta
 
 Target Files:
 
-ctarget: An executable program vulnerable to code-injection attacks
-rtarget: An executable program vulnerable to return-oriented-programming attacks
+ctarget: An executable program vulnerable to code-injection attacks.
+rtarget: An executable program vulnerable to return-oriented-programming attacks.
 cookie.txt: An 8-digit hex code that you will use as a unique identifier in your attacks.
 farm.c: The source code of your target’s “gadget farm,” which you will use in generating return-oriented programming attacks.
 hex2raw: A utility to generate attack strings.
