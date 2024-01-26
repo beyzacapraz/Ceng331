@@ -4,7 +4,8 @@ Introduction to computer organization, data and information representation and p
 # Attack Lab
 This assignment involves generating a total of four attacks, code injection attacks and return-oriented programming, on two programs having different security vulnerabilities.
 
--- Target Files --
+Target Files:
+
 ctarget: An executable program vulnerable to code-injection attacks
 rtarget: An executable program vulnerable to return-oriented-programming attacks
 cookie.txt: An 8-digit hex code that you will use as a unique identifier in your attacks.
